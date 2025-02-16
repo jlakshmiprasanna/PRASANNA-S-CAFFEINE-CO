@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Coffee - Coffee Bliss</title>
+    <style>
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)),
+                url('https://c4.wallpaperflare.com/wallpaper/609/987/577/coffee-coffee-beans-smoke-wallpaper-preview.jpg') no-repeat center center/cover fixed;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .header, .footer {
+            text-align: center;
+            color: whitesmoke;
+            padding: 10px 0;
+        }
+
+        .container {
+            width: 40%;
+            max-width: 600px;
+            margin: 10px auto;
+            border: 2px solid black;
+            border-radius: 8px;
+            padding: 15px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-home {
+            display: block;
+            width: fit-content;
+            margin: 10px auto;
+            padding: 8px 15px;
+            background: #d2691e;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .back-home:hover {
+            background: #e64a19;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        select, input, button {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background: #4a90e2;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #3774e6;
+        }
+
+        .order-details {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f5f0f0;
+            border: 2px solid #1515157a;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <h2>Coffee Bliss - Order Your Coffee</h2>
+    </header>
+
+    <a href="index.html" class="back-home">Back to Home</a>
+
+    <div class="container">
+        <h2>Place Your Order</h2>
+        <form id="orderForm">
+            <select id="coffeeType" required>
+                <option value="" disabled selected>-- Choose Coffee --</option>
+                <option value="Espresso">Espresso - $3.00</option>
+                <option value="Latte">Latte - $4.50</option>
+                <option value="Cappuccino">Cappuccino - $4.00</option>
+                <option value="Mocha">Mocha - $4.50</option>
+                <option value="Macchiato">Macchiato - $3.50</option>
+                <option value="Flat White">Flat White - $3.00</option>
+                <option value="Americano">Americano - $3.50</option>
+                <option value="Irish">Irish - $3.88</option>
+                <option value="Nitro">Nitro - $4.00</option>
+            </select>
+
+            <input type="number" id="quantity" min="1" max="10" placeholder="Quantity" required>
+            <input type="time" id="pickupTime" required>
+
+            <select id="city" required>
+                <option value="" disabled selected>-- Choose City --</option>
+                <option value="Hyd">Hyderabad</option>
+                <option value="Vizag">Vishakapatnam</option>
+                <option value="Rjy">Rajamundry</option>
+                <option value="Vjwd">Vijayawada</option>
+                <option value="kurnool">Kurnool</option>
+                <option value="kkd">Kakinada</option>
+                <option value="kadapa">Kadapa</option>
+                <option value="Nellore">Nellore</option>
+                <option value="guntur">Guntur</option>
+            </select>
+
+            <button type="submit">Confirm Order</button>
+        </form>
+
+        <div id="dynamicOrderDetails"></div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Coffee Bliss. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById("orderForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const coffeeType = document.getElementById("coffeeType").value;
+            const quantity = document.getElementById("quantity").value;
+            const pickupTime = document.getElementById("pickupTime").value;
+            const city = document.getElementById("city").value;
+
+            const detailsContainer = document.getElementById("dynamicOrderDetails");
+            detailsContainer.innerHTML = `
+                <div class="order-details">
+                    <h3>Order Confirmed!</h3>
+                    <p><b>Coffee:</b> ${coffeeType}</p>
+                    <p><b>Quantity:</b> ${quantity}</p>
+                    <p><b>Pickup Time:</b> ${pickupTime}</p>
+                    <p><b>City:</b> ${city}</p>
+                    <p><b>Thank you for your order. Enjoy your coffee!</b></p>
+                </div>`;
+            document.getElementById("orderForm").reset();
+        });
+    </script>
+</body>
+
+</html>

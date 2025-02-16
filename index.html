@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COFFEE SHOP</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <header class="header">
+        <h1 class="logo">"START YOUR DAY WITH COFFEE"</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header><br>
+
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Us</h2>
+            <p>Coffee is often associated with boosting energy, focus, and creativity, making it the perfect companion
+                for work, study, and relaxation. It's more than just a beverage; it's a symbol of comfort and warmth. It
+                brings people together, sparking conversations and creating memorable moments. Derived from the beans of
+                the Coffea plant, it has a rich history that spans continents and cultures. Its aromatic flavor is a
+                result of careful cultivation and precise roasting, making every sip a sensory experience. At Coffee
+                Bliss, we are passionate about serving the finest coffee, crafted to delight and energize you.</p>
+        </div>
+    </section>
+
+    <section id="menu" class="menu">
+        <div class="container">
+            <h2>Our Menu</h2>
+            <div class="menu-items" id="menuItems">
+            </div>
+            <div class="pagination">
+                <button id="prevBtn" onclick="changePage(-1)">&#60;</button>
+                <span id="pageNumber">Page 1</span>
+                <button id="nextBtn" onclick="changePage(1)">&#62;</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <form id="contactForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <h6><b>&copy; 2024 Coffee Bliss. All rights reserved.</b></h6>
+            <div class="social-links">
+                <a href="https://www.facebook.com" target="_blank" title="Follow us on Facebook">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" class="social-icon">
+                </a>
+                <a href="https://www.instagram.com" target="_blank" title="Follow us on Instagram">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"
+                        class="social-icon">
+                </a>
+                <a href="https://www.twitter.com" target="_blank" title="Follow us on Twitter">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" class="social-icon">
+                </a>
+            </div>
+        </div>
+
+        </script>
+
+    </footer>
+
+    <script>
+        const coffeeItems = [
+            { name: "Espresso", description: "It’s loved for its intense flavor and thick, golden crema on top.", imgSrc: "https://marketplace.canva.com/EAE3ZQEPq2I/2/0/900w/canva-simple-aesthetic-coffee-time-instagram-instagram-BTsdS_U4hE4.jpg" },
+            { name: "Latte", description: "It’s perfect for those who enjoy a milder coffee experience.", imgSrc: "https://static.vecteezy.com/system/resources/previews/023/979/901/non_2x/coffee-cup-with-latte-art-on-wooden-table-background-photo.jpeg" },
+            { name: "Cappuccino", description: "It offers a rich and velvety texture, ideal for coffee lovers who enjoy a balanced and creamy flavor.", imgSrc: "https://c4.wallpaperflare.com/wallpaper/747/312/981/coffee-coffee-beans-cup-wallpaper-thumb.jpg" },
+            { name: "Mocha", description: "A delightful blend of espresso, steamed milk, and chocolate.", imgSrc: "https://i.pinimg.com/originals/76/8b/aa/768baa302c5195ddedfa35ff5ccb7fa0.jpg" },
+            { name: "Macchiato", description: "Espresso with a splash of steamed milk.", imgSrc: "https://igot.coffee/wp-content/uploads/2024/01/macchiato-coffee-igotcoffee.jpeg" },
+            { name: "Flat White", description: "A smooth, velvety coffee with espresso and steamed milk.", imgSrc: "http://i2.cdn.turner.com/cnnnext/dam/assets/150105192950-flat-white-coffee-full-169.jpg" },
+            { name: "Americano", description: "Espresso diluted with hot water for a smoother taste.", imgSrc: "https://coffeforus.com/wp-content/uploads/2022/12/Americano-coffee-recipe.jpg" },
+            { name: "Irish Coffee", description: "A delightful blend of coffee, whiskey, and cream.", imgSrc: "https://png.pngtree.com/thumb_back/fw800/background/20240411/pngtree-irish-coffee-with-a-cookie-image_15656790.jpg" },
+            { name: "Nitro Coffee", description: "Cold brew coffee infused with nitrogen for a creamy texture.", imgSrc: "http://www.pixelstalk.net/wp-content/uploads/2016/05/Desktop-Download-Coffee-Wallpapers-HD.jpg" },
+        ];
+
+        const itemsPerPage = 3;
+        let currentPage = 1;
+
+        function displayItems() {
+            const totalPages = Math.ceil(coffeeItems.length / itemsPerPage);
+            const menuItemsContainer = document.getElementById("menuItems");
+            menuItemsContainer.innerHTML = "";  // Clear the current items
+
+            if (currentPage <= totalPages) {
+                const start = (currentPage - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                const itemsToShow = coffeeItems.slice(start, end);
+
+                itemsToShow.forEach(item => {
+                    const menuItem = document.createElement("div");
+                    menuItem.classList.add("menu-item");
+                    menuItem.innerHTML = `
+                        <img src="${item.imgSrc}" alt="${item.name}">
+                        <h3><b>${item.name}</b></h3>
+                        <p>${item.description}</p>
+                    `;
+                    menuItemsContainer.appendChild(menuItem);
+                });
+            } else {
+                coffeeItems.forEach(item => {
+                    const menuItem = document.createElement("div");
+                    menuItem.classList.add("menu-item");
+                    menuItem.innerHTML = `
+                        <img src="${item.imgSrc}" alt="${item.name}">
+                        <h3><b>${item.name}</b></h3>
+                        <p>${item.description}</p>
+                    `;
+                    menuItemsContainer.appendChild(menuItem);
+                });
+            }
+
+            document.getElementById("pageNumber").textContent = `Page ${currentPage}`;
+        }
+
+        function changePage(direction) {
+            const totalPages = Math.ceil(coffeeItems.length / itemsPerPage);
+
+            if (direction === 1 && currentPage < totalPages) {
+                currentPage++;
+            } else if (direction === -1 && currentPage > 1) {
+                currentPage--;
+            }
+
+            displayItems();
+        }
+
+        displayItems();
+
+        function displayItems() {
+            const totalPages = Math.ceil(coffeeItems.length / itemsPerPage);
+            const menuItemsContainer = document.getElementById("menuItems");
+            menuItemsContainer.innerHTML = "";
+
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = Math.min(start + itemsPerPage, coffeeItems.length);
+            const itemsToShow = coffeeItems.slice(start, end);
+
+            itemsToShow.forEach(item => {
+                const menuItem = document.createElement("div");
+                menuItem.classList.add("menu-item");
+                menuItem.innerHTML = `
+            <img src="${item.imgSrc}" alt="${item.name}">
+            <h3><b>${item.name}</b></h3>
+            <p>${item.description}</p>
+            <button class="buy-now-btn" onclick="buyNow('${item.name}')">Buy Now</button>
+        `;
+                menuItemsContainer.appendChild(menuItem);
+            });
+
+            document.getElementById("pageNumber").textContent = `Page ${currentPage} of ${totalPages}`;
+            document.getElementById("prevBtn").disabled = currentPage === 1;
+            document.getElementById("nextBtn").disabled = currentPage === totalPages;
+        }
+
+
+        function buyNow(itemName) {
+            if (!itemName) {
+                alert("Invalid item selected.");
+                return;
+            }
+            localStorage.setItem("selectedCoffee", itemName);
+            window.location.href = "buynow.html";
+        }
+
+    </script>
+</body>
+
+</html>
